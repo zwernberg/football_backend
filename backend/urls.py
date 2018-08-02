@@ -14,8 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url
+from django.urls import path
 from django.contrib import admin
+
+import season.views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    path('api/v1/leagueSettings/<int:seasonId>/<int:leagueId>/', season.views.league_settings,),
+    path('api/v1/seasonOverview/<int:seasonId>', season.views.season_overview,)
 ]
