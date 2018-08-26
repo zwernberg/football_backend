@@ -136,11 +136,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = '/static/'
+## static
+STATIC_URL = env('STATIC_URL', default='/static/')
+STATIC_ROOT = env('STATIC_ROOT', default='')
 
-CORS_ORIGIN_ALLOW_ALL = True
 
 # FANTASY FOOTBALL SETTINGS
 
 SEASON_ID = 2018
 ENDPOINT = "http://games.espn.com/ffl/api/v2/"
+
+CORS_ORIGIN_ALLOW_ALL = True
