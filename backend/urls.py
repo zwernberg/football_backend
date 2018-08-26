@@ -22,7 +22,7 @@ import team.views
 import scoreboard.views
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    url(r'^api/admin/', admin.site.urls),
     path('api/leagueSettings/<int:seasonId>/<int:leagueId>/', season.views.league_settings,),
     path('api/seasonOverview/<int:seasonId>', season.views.season_overview,),
     path('api/scoreboard', scoreboard.views.scoreboard_view,),
