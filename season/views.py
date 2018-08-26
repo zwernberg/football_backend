@@ -8,22 +8,27 @@ import requests
  
 import backend.settings as settings
 
+from team.serializers import TeamSerializer
+
 from season.models import Season
 import season.serializers
 
 from espn import service
 
-import pdb
-
 # Create your views here.
 
 
-@cache_page(60 * 5)
+#@cache_page(60 * 5)
 @api_view(['GET',])
 def league_settings(request, seasonId, leagueId):
     r = service.fetch('leagueSettings', leagueId, seasonId)
-    status = r.status_code
     data = r.json()
+
+    val = data['leaguesettings']['teams'].values()
+    team_serialized = TeamSerializer(val, many=True)
+    data['leaguesettings']['teams'] = team_serialized.data
+    status = r.status_code
+    
 
     return Response(data, status)
 
@@ -38,7 +43,7 @@ def season_overview(request, seasonId):
     }
     status = ""
     for division in divisions:
-        r = service.fetch('leagueSettings', division.leagueId, seasonId)
+        r = service.fetch('teams', division.leagueId, seasonId)
         data['divisions'][division.leagueId] = r.json()
         status = r.status_code
 

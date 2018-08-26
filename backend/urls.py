@@ -18,9 +18,15 @@ from django.urls import path
 from django.contrib import admin
 
 import season.views
+import team.views
+import scoreboard.views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    path('api/v1/leagueSettings/<int:seasonId>/<int:leagueId>/', season.views.league_settings,),
-    path('api/v1/seasonOverview/<int:seasonId>', season.views.season_overview,)
+    path('api/leagueSettings/<int:seasonId>/<int:leagueId>/', season.views.league_settings,),
+    path('api/seasonOverview/<int:seasonId>', season.views.season_overview,),
+    path('api/scoreboard', scoreboard.views.scoreboard_view,),
+    path('api/scoreboard/<int:seasonId>', scoreboard.views.scoreboard_view,),
+    path('api/team/<int:seasonId>/<int:leagueId>/<int:teamId>', team.views.team_view,)
+
 ]
