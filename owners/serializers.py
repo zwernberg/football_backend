@@ -13,4 +13,9 @@ class OwnerSerializer(serializers.Serializer):
                 'firstName': 'Cathy',
                 'lastName': 'Wernberg'
             }
+        elif (obj['teamAbbrev'] == 'QM'):
+            owner = {
+                'firstName': 'Kensey',
+                'lastName': 'Schultz'
+            }
         return (owner['firstName'] + ' ' + owner['lastName'])
