@@ -7,7 +7,7 @@ from espn import service
 from backend import settings
 from season.models import Season, Division
 
-import pdb
+from scoreboard.service import addOwners
 # Create your views here.
 
 #@cache_page(20)
@@ -17,4 +17,5 @@ def scoreboard_view(request, seasonId=settings.SEASON_ID):
     divisions = season.divisions.all()
     matchupPeriodId = request.GET.get('matchupPeriodId', '')
     response = service.fetchWeek(divisions, matchupPeriodId, seasonId)
-    return Response(response['data'], response['status_code'])
+    result = addOwners(response)
+    return Response(result['data'], result['status_code'])

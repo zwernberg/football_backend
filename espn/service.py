@@ -1,6 +1,5 @@
 import backend.settings as settings
 import requests
-import pdb
 
 def fetch(endpoint, leagueId, seasonId = settings.SEASON_ID, extra_params = {}):
     params = {
