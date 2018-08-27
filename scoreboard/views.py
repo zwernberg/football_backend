@@ -10,7 +10,7 @@ from season.models import Season, Division
 from scoreboard.service import addOwners
 # Create your views here.
 
-#@cache_page(20)
+@cache_page(30)
 @api_view(['GET',])
 def scoreboard_view(request, seasonId=settings.SEASON_ID):
     season = Season.objects.get(year=seasonId)
