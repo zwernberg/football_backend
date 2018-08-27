@@ -20,6 +20,7 @@ from django.contrib import admin
 import season.views
 import team.views
 import scoreboard.views
+import owners.views
 
 urlpatterns = [
     url(r'^api/admin/', admin.site.urls),
@@ -27,6 +28,6 @@ urlpatterns = [
     path('api/seasonOverview/<int:seasonId>', season.views.season_overview,),
     path('api/scoreboard', scoreboard.views.scoreboard_view,),
     path('api/scoreboard/<int:seasonId>', scoreboard.views.scoreboard_view,),
+    path('api/owners', owners.views.owners_view,),
     path('api/team/<int:seasonId>/<int:leagueId>/<int:teamId>', team.views.team_view,)
-
 ]

@@ -51,6 +51,7 @@ LOCAL_APPS = [
     'season',
     'team',
     'scoreboard',
+    'owners',
 ]
 
 
