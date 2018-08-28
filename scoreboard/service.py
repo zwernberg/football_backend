@@ -6,9 +6,6 @@ def addOwners(result):
         divisionId = division['metadata']['leagueId']
         for matchup in division['scoreboard']['matchups']:
             for team in matchup['teams']:
-                teamId = team['team']['teamId']
-                for owner in owners['data']['divisions'][divisionId]:
-                    if owner['teamId'] == teamId:
-                        team['team']['owner'] = owner['owner']
-                        break
+                teamIndex = (team['team']['teamId'] - 1)
+                team['team']['owner'] = owners['data']['divisions'][divisionId][teamIndex]['owner']
     return result
