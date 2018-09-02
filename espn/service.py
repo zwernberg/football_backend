@@ -26,24 +26,28 @@ def fetchWeek(divisions, matchupPeriodId = '', seasonId = settings.SEASON_ID):
         val = res.json()
         val['metadata']['division'] = division.name
         
-        # for matchup in val['scoreboard']['matchups']:
-        #     players = []
-        #     for team in matchup['teams']:
-        #         params = {
-        #             'playerId': ",".join(str(v) for v in team['playerIDs']),
-        #             'useCurrentPeriodProjectedStats': True,
-        #             'useCurrentPeriodRealStats': True,
-        #             'includeRankings': False,
-        #             'includeProjectionText': False,
-        #             'includeOwnPotentialTradeTransactions': False,
-        #             'includeLatestNews': False,
-        #             'matchupPeriodId': matchupPeriodId
-        #         }
-        #         team_result = fetch('playerInfo', league.league_id, extra_params= params)
-        #         players = team_result.json()['playerInfo']['players']
-        #         team['players'] = players
-
         data['divisions'].append(val)
+        status_code = res.status_code
+    return {
+        'data': data,
+        'status_code': status_code
+    }
+
+def fetchStandings(divisions):
+    data = {
+        'divisions': [],
+    }
+    status_code = ''
+
+    for division in divisions:
+        res = fetch('leagueSettings', division.leagueId)
+        val = res.json()
+        val['metadata']['division'] = division.name
+        stripped = {
+            'metadata': val['metadata'],
+            'teams': val['leaguesettings']['teams'],
+        }
+        data['divisions'].append(stripped)
         status_code = res.status_code
     return {
         'data': data,
