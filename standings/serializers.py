@@ -1,5 +1,4 @@
 from rest_framework import serializers
-import pdb
 
 class RecordSerializer(serializers.Serializer):
     overallLosses = serializers.IntegerField()
@@ -20,14 +19,9 @@ class StandingSerializer(serializers.Serializer):
     teamAbbrev = serializers.CharField()
     rank = serializers.CharField()
     overallStanding = serializers.IntegerField()
-    owner = serializers.SerializerMethodField()
+    owner = serializers.CharField()
     record = RecordSerializer()
 
 
     def get_teamName(self, obj):
         return (obj['teamLocation'] + " " + obj['teamNickname'])
-
-    def get_owner(self, obj):
-        # pdb.set_trace()
-        print(obj['owner'])
-        return obj['owner'] or 'not found'
