@@ -12,6 +12,9 @@ from standings.serializers import StandingSerializer
 
 TEN_MINUTES = 60 * 10
 
+def sortFunc(team):
+    return team['overallStanding']
+
 @cache_page(TEN_MINUTES)
 @api_view(['GET',])
 def standings_view(request):
@@ -26,7 +29,7 @@ def standings_view(request):
     for index, division in enumerate(response['data']['divisions']):
         val = division['teams'].values()
         standings_serialized = StandingSerializer(val, many=True)
-        response['data']['divisions'][index]['teams'] = standings_serialized.data
+        response['data']['divisions'][index]['teams'] = sorted(standings_serialized.data, key=sortFunc)
     
 
     return Response(response['data'], response['status_code'])
