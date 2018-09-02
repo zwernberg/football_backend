@@ -19,7 +19,7 @@ class StandingSerializer(serializers.Serializer):
     teamNickname = serializers.CharField()
     teamAbbrev = serializers.CharField()
     rank = serializers.CharField()
-    overallStanding = serializers.CharField()
+    overallStanding = serializers.IntegerField()
     owner = serializers.SerializerMethodField()
     record = RecordSerializer()
 

@@ -10,7 +10,7 @@ from espn import service
 from standings.service import addOwners
 from standings.serializers import StandingSerializer
 
-TEN_MINUTES = 60 * 60 * 10
+TEN_MINUTES = 60 * 10
 
 @cache_page(TEN_MINUTES)
 @api_view(['GET',])
