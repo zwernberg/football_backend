@@ -13,9 +13,14 @@
 <script>
     var roomName = {{ room_name_json }};
 
-    var chatSocket = new WebSocket(
+
+    connect = function() {
+        var chatSocket = new WebSocket(
         'wss://' + window.location.host +
         '/ws/chat/' + roomName + '/');
+    }
+
+    connect()
 
     chatSocket.onmessage = function(e) {
         var data = JSON.parse(e.data);
@@ -24,7 +29,8 @@
     };
 
     chatSocket.onclose = function(e) {
-        console.error('Chat socket closed unexpectedly');
+        console.error('Chat socket closed unexpectedly, reconnecting');
+        connect()
     };
 
     document.querySelector('#chat-message-input').focus();
