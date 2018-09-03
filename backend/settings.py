@@ -151,7 +151,7 @@ CHANNEL_LAYERS = {
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 ## static
-STATIC_URL = env('STATIC_URL', default='/static/')
+STATIC_URL = env('STATIC_URL', default='/django_static/')
 STATIC_ROOT = env('STATIC_ROOT', default='')
 
 
