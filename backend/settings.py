@@ -45,6 +45,7 @@ DJANOG_APPS = [
 THIRD_PARTY_APPS = [
     'corsheaders',
     'rest_framework',
+    'channels',
 ]
 
 LOCAL_APPS = [
@@ -52,7 +53,8 @@ LOCAL_APPS = [
     'team',
     'scoreboard',
     'owners',
-    'standings'
+    'standings',
+    'chat'
 ]
 
 
@@ -134,6 +136,16 @@ USE_L10N = True
 
 USE_TZ = True
 
+## Channel Settings
+ASGI_APPLICATION = 'backend.routing.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
