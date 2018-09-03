@@ -22,6 +22,8 @@
         '/ws/chat/' + roomName + '/');
     }
 
+    connect();
+
     chatSocket.onmessage = function(e) {
         var data = JSON.parse(e.data);
         var message = data['message'];
@@ -59,9 +61,6 @@
     function check(){
         if(!ws || ws.readyState == 3) connect();
     }
-
-    connect();
-
     setInterval(check, 5000);
 </script>
 </html>
