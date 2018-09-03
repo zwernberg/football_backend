@@ -59,7 +59,7 @@
 
 
     function check(){
-        if(!ws || ws.readyState == 3) connect();
+        if(!chatSocket || chatSocket.readyState == 3) connect();
     }
     setInterval(check, 5000);
 </script>
