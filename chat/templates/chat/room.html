@@ -13,9 +13,10 @@
 <script>
     var roomName = {{ room_name_json }};
 
+    var chatSocket;
 
     connect = function() {
-        var chatSocket = new WebSocket(
+        chatSocket = new WebSocket(
         'wss://' + window.location.host +
         '/ws/chat/' + roomName + '/');
     }
