@@ -35,7 +35,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             self.room_group_name,
             JSON.stringify({
                 'type': 'chat_message',
-                payload: {
+                'payload': {
                     'message': message
                 }
             })
