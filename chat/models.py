@@ -8,3 +8,7 @@ class ChatMessage(models.Model):
 
     def __str__(self):
         return self.message
+
+
+    def last_20_messages():
+        return ChatMessage.objects.order_by('-created').all()[:20]

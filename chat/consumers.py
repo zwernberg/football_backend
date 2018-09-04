@@ -1,5 +1,6 @@
 from channels.generic.websocket import AsyncWebsocketConsumer
 import json
+import pdb
 
 from chat.models import ChatMessage
 
@@ -23,12 +24,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
             self.channel_name
         )
 
-    # Receive message from WebSocket
-    async def receive(self, text_data):
-        text_data_json = json.loads(text_data)
-        name = text_data_json['name']
-        message = text_data_json['message']
-        db_message = ChatMessage(user=name, message=message)
+    async def send_message(self, text_data):
+        user = text_data['payload']['user']
+        message = text_data['payload']['message']
+        db_message = ChatMessage(user=user, message=message)
         db_message.save()
         # Send message to room group
         await self.channel_layer.group_send(
@@ -36,20 +35,54 @@ class ChatConsumer(AsyncWebsocketConsumer):
             {
                 'type': 'chat_message',
                 'message': message,
-                'name': name
+                'user': user
             }
         )
 
+    async def fetch_messages(self, data):
+        # pdb.set_trace()
+        messages = ChatMessage.last_20_messages()
+        content = {
+            'type': 'messages',
+            'payload': self.messages_to_json(messages)
+        }
+        await self.send(json.dumps(content))
+
     # Receive message from room group
     async def chat_message(self, event):
-        name = event['name']
+        user = event['user']
         message = event['message']
 
         # Send message to WebSocket
         await self.send(text_data=json.dumps({
             'type': 'chat_message',
             'payload': {
-                'name': name,
+                'user': user,
                 'message': message
             }
         }))
+
+
+
+    def messages_to_json(self, messages):
+        result = []
+        for message in messages:
+            result.append(self.message_to_json(message))
+        return result[::-1]
+
+    def message_to_json(self, message):
+        return {
+            'id': str(message.id),
+            'user': message.user,
+            'message': message.message,
+            'created': str(message.created)
+        }
+
+    # Receive message from WebSocket
+    async def receive(self, text_data):
+        #pdb.set_trace()
+        text_data_json = json.loads(text_data)
+        if (text_data_json['payload']['type'] == 'RETRIEVE_MESSAGES'):
+            await self.fetch_messages(text_data_json)
+        else:
+            await self.send_message(text_data_json)
