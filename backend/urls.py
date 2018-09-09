@@ -30,6 +30,7 @@ urlpatterns = [
     path('api/seasonOverview/<int:seasonId>', season.views.season_overview,),
     path('api/scoreboard', scoreboard.views.scoreboard_view,),
     path('api/scoreboard/<int:seasonId>', scoreboard.views.scoreboard_view,),
+    path('api/boxscore/<int:leagueId>/<int:matchupPeriodId>/<int:teamId>',scoreboard.views.boxscore_view,),
     path('api/owners', owners.views.owners_view,),
     path('api/standings', standings.views.standings_view,),
     path('api/team/<int:seasonId>/<int:leagueId>/<int:teamId>', team.views.team_view,)

@@ -19,3 +19,10 @@ def scoreboard_view(request, seasonId=settings.SEASON_ID):
     response = service.fetchWeek(divisions, matchupPeriodId, seasonId)
     result = addOwners(response)
     return Response(result['data'], result['status_code'])
+
+
+@cache_page(10)
+@api_view(['GET',])
+def boxscore_view(request, leagueId, matchupPeriodId, teamId):
+    response = service.fetchBoxscore(leagueId, matchupPeriodId, teamId)
+    return Response(response['data'], response['status_code'])

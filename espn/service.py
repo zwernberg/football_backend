@@ -7,6 +7,7 @@ def fetch(endpoint, leagueId, seasonId = settings.SEASON_ID, extra_params = {}):
         'seasonId': seasonId
     }
     params.update(extra_params)
+    print(settings.ENDPOINT + endpoint, params)
     return requests.get(settings.ENDPOINT + endpoint, params=params)
 
 
@@ -52,4 +53,16 @@ def fetchStandings(divisions):
     return {
         'data': data,
         'status_code': status_code
+    }
+
+def fetchBoxscore(leagueId, matchupPeriodId, teamId):
+    params = {
+        'matchupPeriodId': matchupPeriodId,
+        'teamId': teamId
+    }
+    res = fetch('boxscore', leagueId, seasonId=settings.SEASON_ID, extra_params=params)
+
+    return {
+        'data': res.json(),
+        'status_code': res.status_code
     }
